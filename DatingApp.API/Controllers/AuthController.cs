@@ -28,6 +28,7 @@ namespace DatingApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
+            //throw new Exception("Get off my lawn!");
             var userToAuthenticate = await this._repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
             if (userToAuthenticate == null)
