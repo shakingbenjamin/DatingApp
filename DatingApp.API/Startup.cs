@@ -56,6 +56,8 @@ namespace DatingApp.API
                     ValidateAudience = false
                 };
             });
+            // create an instance on every request to log user activity 
+            services.AddScoped<LogUserActivity>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
