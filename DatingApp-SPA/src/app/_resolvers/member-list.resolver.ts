@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   Resolve,
   Router,
-  ActivatedRoute,
   ActivatedRouteSnapshot,
 } from '@angular/router';
 
@@ -15,6 +14,9 @@ import { catchError } from 'rxjs/operators';
 @Injectable()
 export class MemberListResolver implements Resolve<User[]> {
   // a class to make sure that the data is loaded before getting to the page so the ? operator isn't needed on components
+  pageNumber = 1;
+  pageSize = 4;
+  
   constructor(
     private userService: UserService,
     private router: Router,
@@ -22,7 +24,7 @@ export class MemberListResolver implements Resolve<User[]> {
   ) {}
   // when the route is hit, the resolver gets the data required for the component and catches any error returned.
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-    return this.userService.getUsers().pipe(
+    return this.userService.getUsers(this.pageNumber, this.pageSize).pipe(
       catchError((error) => {
         this.alertify.error('problem retrieving data');
         this.router.navigate(['/home']);
